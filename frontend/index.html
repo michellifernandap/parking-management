@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Gestión de Aparcamiento</title>
+    <!-- Añade aquí tu CSS o referencias a frameworks de CSS como Bootstrap si prefieres -->
+</head>
+<body>
+    <h1>Sistema de Gestión de Aparcamiento</h1>
+    <button id="firstFloor">Mostrar plazas primera planta</button>
+    <button id="secondFloor">Mostrar plazas segunda planta</button>
+    <div id="parkingSpots"></div>
+
+<script>
+document.getElementById('firstFloor').addEventListener('click', function() {
+    fetch('/getSpots?floor=1')
+        .then(response => response.json())
+        .then(data => {
+            const spotsElement = document.getElementById('parkingSpots');
+            spotsElement.innerHTML = ''; // Limpiar los resultados anteriores
+            data.forEach(spot => {
+                spotsElement.innerHTML += `Plaza ${spot.spot_number}: ${spot.status}<br>`;
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+document.getElementById('secondFloor').addEventListener('click', function() {
+    fetch('/getSpots?floor=2')
+        .then(response => response.json())
+        .then(data => {
+            const spotsElement = document.getElementById('parkingSpots');
+            spotsElement.innerHTML = ''; // Limpiar los resultados anteriores
+            data.forEach(spot => {
+                spotsElement.innerHTML += `Plaza ${spot.spot_number}: ${spot.status}<br>`;
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+</script>
+    
+
+
+
+
+
+    
+    <!-- Aquí irán los resultados de las plazas -->
+    <div id="parkingSpots"></div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
