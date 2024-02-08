@@ -8,6 +8,28 @@ const ParkingManager = {
       return callback(results);
     });
   },
+  
+  getSpotsByFloor: function(floor, callback) {
+    db.query('SELECT * FROM ParkingSpots WHERE level = ?', [parseInt(floor, 10)], function (error, results, fields) {
+      if (error) throw error;
+      return callback(results);
+    });
+  },
+
+    // Obtener plazas libres
+    getFreeSpots: function(callback) {
+      db.query('SELECT * FROM ParkingSpots WHERE status = "L"', function (error, results, fields) {
+        if (error) throw error;
+        return callback(results);
+      });
+    },
+  // Obtener plazas ocupadas
+  getOccupiedSpots: function(callback) {
+    db.query('SELECT * FROM ParkingSpots WHERE status = "O"', function (error, results, fields) {
+      if (error) throw error;
+      return callback(results);
+    });
+  },
 
   // Ocupar una plaza
   occupySpot: function(level, spotNumber, licensePlate, callback) {
@@ -39,5 +61,9 @@ const ParkingManager = {
   }
 };
 
-module.exports = ParkingManager;
 
+
+
+
+
+module.exports = ParkingManager;
